@@ -131,19 +131,28 @@ public class MATRIKS
         PREKONDISI : MATRIKS HARUS SUDAH ECHELON FORM
         */
         /* METODE ELIMINASI JORDAN */
-        for (int i = this.GetMaksNeffBaris()-1; i >= 1; i--) {
-            for (int j =this.GetMaksNeffKolom()-1 ; j > i; j--) {
-                this.SetNilai(i, this.GetMaksNeffKolom(), 
-                    this.GetNilai(i, this.GetMaksNeffKolom())-
-                    (this.GetNilai(i, j)*this.GetNilai(j, this.GetMaksNeffKolom()))
-                );
-                this.SetNilai(i, j, 0);
+        int baris = 1,barisSebelum=0;
+        for (int k = 1; k < this.GetMaksNeffKolom(); k++) {
+            while (this.GetNilai(baris, k)!=1 && baris<this.GetMaksNeffBaris()){
+                baris++; 
+            }
+            //System.out.println(baris);
+            if(baris!=barisSebelum && baris<=this.GetMaksNeffBaris()){
+                for (int i = 1; i < baris; i++) {
+                    for (int j = this.GetMaksNeffKolom(); j >= k; j--) {
+                        this.SetNilai(i,j,
+                            this.GetNilai(i, j)-(this.GetNilai(baris, j)*this.GetNilai(i, k))
+                        );
+                    }
+                }
+                barisSebelum = baris;
+                baris++;
             }
         }
     }
 
     public void TulisHasilGauss() {
-        /*PREKONDISI : MATRIKS DALAM BENTUK ECHELON FORM*/
+        /*PREKONDISI : AUGMENTED MATRIKS DALAM BENTUK ECHELON FORM*/
         float hasil[] = new float[this.GetMaksNeffKolom()];
         for (int i = this.GetMaksNeffKolom()-1; i >=1 ; i--) {
             hasil[i] = this.GetNilai(i, this.GetMaksNeffKolom());
@@ -158,10 +167,32 @@ public class MATRIKS
     }
 
     public void TulisHasilJordan() {
-        /*PREKONDISI : MATRIKS DALAM BENTUK REDUCED ECHELON FORM*/
-        for (int i = 1; i <= this.GetMaksNeffKolom()-1; i++) {
-            System.out.printf(this.GetNilai(i, this.GetMaksNeffKolom())+" ");
+        /*PREKONDISI : AUGMENTED MATRIKS DALAM BENTUK REDUCED ECHELON FORM*/
+        //Matriks X
+        System.out.printf("(");
+        for (int j = 1; j <=this.GetMaksNeffBaris(); j++) {
+            System.out.printf("%3c%d",'x',j);
         }
+        System.out.printf(") = ");
+        
+        //Matriks b
+        System.out.printf("(");
+        for (int j = 1; j <=this.GetMaksNeffBaris(); j++) {
+            System.out.printf("  %5.2f",this.GetNilai(j,this.GetMaksNeffKolom()));
+        }
+        System.out.printf(") ");
+        
+        //Matriks Translasi
+        for (int i = 2; i <= this.GetMaksNeffKolom()-1; i++) {
+            if(this.GetNilai(1, i)!=0){
+                System.out.printf("-p(");
+                for (int j = 1; j <=this.GetMaksNeffBaris(); j++) {
+                    System.out.printf("  %5.2f",this.GetNilai(j,i));
+                }
+                System.out.printf(") ");
+            }
+        }
+
         System.out.println();
     }
 }
