@@ -101,10 +101,25 @@ public class MATRIKS
         I.S. sembarang Augmented Matriks
         F.S. Augmented Matriks Echelon form
         */
-
+        /* PENGONDISIAN AWAL UNTUK MATRIKS TERTENTU */
+        for (int i=1;i<=this.GetMaksNeffBaris();i++){
+                int counterBaris = 1;
+                while (this.GetNilai(i,i)==0 && counterBaris<=this.GetMaksNeffBaris())
+                {    
+                    if(counterBaris!=i){
+                        for (int j=1;j<=this.GetMaksNeffKolom();j++){
+                            this.SetNilai(i, j, 
+                                this.GetNilai(i, j) + this.GetNilai(counterBaris, j)
+                            );
+                        }
+                    }
+                    counterBaris++;  
+                }
+        }
         /* METODE ELIMINASI GAUSS */
         float pengali;
         for(int k=1;k<=this.GetMaksNeffKolom()-1;k++){
+            /* OPERASI BARIS ELEMENTER */
             for (int i=this.GetMaksNeffBaris();i>k;i--){
                 
                 if(this.GetNilai(i-1, k)==0)    {pengali = 0;}
@@ -116,6 +131,7 @@ public class MATRIKS
                     );
                 }
             }
+            /* SCALING */
             for (int j=this.GetMaksNeffKolom();j>=k;j--){
                 this.SetNilai(k,j,
                     this.GetNilai(k,j)/this.GetNilai(k,k)
