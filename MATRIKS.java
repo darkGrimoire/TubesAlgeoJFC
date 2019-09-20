@@ -169,46 +169,75 @@ public class MATRIKS
 
     public void TulisHasilGauss() {
         /*PREKONDISI : AUGMENTED MATRIKS DALAM BENTUK ECHELON FORM*/
-        float hasil[] = new float[this.GetMaksNeffKolom()];
-        for (int i = this.GetMaksNeffKolom()-1; i >=1 ; i--) {
-            hasil[i] = this.GetNilai(i, this.GetMaksNeffKolom());
-            for (int j = i+1; j <= GetMaksNeffKolom()-1; j++) {
-                hasil[i]-=(this.GetNilai(i, j)*hasil[j]);
+        float hasil[][] = new float[this.GetMaksNeffKolom()+1][this.GetMaksNeffKolom()+1];
+        int indeksX = this.GetMaksNeffKolom()-1;
+        for (int i = this.GetMaksNeffBaris(); i >=1 ; i--) {
+            // hasil[i] = this.GetNilai(i, this.GetMaksNeffKolom());
+            int j = indeksX;
+            while((this.GetNilai(i, j)!=1 || this.GetNilai(i, j-1)!=0) && j>1){
+                hasil[indeksX][indeksX] = 1;
+                hasil[0][indeksX] = 1;
+                indeksX--;
+                j--;
             }
+            hasil[indeksX][0] = this.GetNilai(i, this.GetMaksNeffKolom());
+            for (int k = indeksX+1; k <= this.GetMaksNeffKolom(); k++) {
+                for (int jj = 0; jj <= this.GetMaksNeffKolom(); jj++) {
+                    hasil[indeksX][jj]-=(hasil[k][jj]*this.GetNilai(i, k));
+                }
+            }
+            indeksX--;
         }
+
+        hasil[0][0] = 1;
         for (int i = 1; i <= this.GetMaksNeffKolom()-1; i++) {
-            System.out.printf(hasil[i]+" ");
+            System.out.printf("%3c%d",'x',i);
+            for (int j = 0; j <= this.GetMaksNeffKolom()-1; j++) {
+                if(hasil[0][j]==1)
+                    System.out.printf("  %5.0f",hasil[i][j]);
+            }
+            System.out.println();
         }
         System.out.println();
     }
 
     public void TulisHasilJordan() {
         /*PREKONDISI : AUGMENTED MATRIKS DALAM BENTUK REDUCED ECHELON FORM*/
-        //Matriks X
-        System.out.printf("(");
-        for (int j = 1; j <=this.GetMaksNeffBaris(); j++) {
-            System.out.printf("%3c%d",'x',j);
-        }
-        System.out.printf(") = ");
-        
-        //Matriks b
-        System.out.printf("(");
-        for (int j = 1; j <=this.GetMaksNeffBaris(); j++) {
-            System.out.printf("  %5.2f",this.GetNilai(j,this.GetMaksNeffKolom()));
-        }
-        System.out.printf(") ");
-        
-        //Matriks Translasi
-        for (int i = 2; i <= this.GetMaksNeffKolom()-1; i++) {
-            if(this.GetNilai(1, i)!=0){
-                System.out.printf("-p(");
-                for (int j = 1; j <=this.GetMaksNeffBaris(); j++) {
-                    System.out.printf("  %5.2f",this.GetNilai(j,i));
+        boolean isnVarBebas[] = new boolean[this.GetMaksNeffKolom()];
+        for (int i = 1; i <= this.GetMaksNeffKolom()-1; i++) {
+            isnVarBebas[i] = true;
+            for (int j = 1; j <= this.GetMaksNeffBaris(); j++) {
+                if(i!=j){
+                    isnVarBebas[i] = isnVarBebas[i] && (this.GetNilai(j, i)==0);
                 }
-                System.out.printf(") ");
             }
         }
 
+        for (int i = 1; i <= this.GetMaksNeffKolom()-1; i++) {
+            System.out.printf("%3c%d",'x',i);
+            if(isnVarBebas[i]){
+                System.out.printf("  %5.0f",this.GetNilai(i, this.GetMaksNeffKolom()));
+                for (int j = i; j <= this.GetMaksNeffKolom()-1; j++) {
+                    if(this.GetNilai(i, j)==0)
+                        this.SetNilai(i, j,-0f);
+                    if(!isnVarBebas[j])
+                        System.out.printf("  %5.0f",-1*this.GetNilai(i, j));
+                }
+            }
+            else{
+                System.out.printf("  %5.0f",0.0);
+                for (int j = 1; j <= this.GetMaksNeffKolom()-1; j++) {
+                    if(!isnVarBebas[j]){
+                        if(i==j){
+                            System.out.printf("  %5.0f",1.0);
+                        }else{
+                           System.out.printf("  %5.0f",0.0);
+                        }
+                    }
+                }
+            }
+            System.out.println();
+        }
         System.out.println();
     }
 }
