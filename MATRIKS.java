@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class MATRIKS 
 { 
-    float isi[][]; // 1 - 100
+    double isi[][]; // 1 - 100
     int maksNeffKolom;
     int maksNeffBaris;
 
@@ -14,7 +14,7 @@ public class MATRIKS
     public MATRIKS(int maksBaris, int maksKolom){
         this.maksNeffBaris = 0;
         this.maksNeffKolom = 0;
-        this.isi = new float[maksBaris][maksKolom];
+        this.isi = new double[maksBaris+1][maksKolom+1];
     }
 
     // getter
@@ -24,7 +24,7 @@ public class MATRIKS
     public int GetMaksNeffBaris(){
         return this.maksNeffBaris;
     }
-    public float GetNilai(int baris,int kolom){
+    public double GetNilai(int baris,int kolom){
         return this.isi[baris][kolom];
     }
 
@@ -35,8 +35,13 @@ public class MATRIKS
     public void SetMaksNeffBaris(int barisBaru){
         this.maksNeffBaris = barisBaru;
     }
-    public void SetNilai(int baris,int kolom,float nilaiBaru){
+    public void SetNilai(int baris,int kolom,double nilaiBaru){
         this.isi[baris][kolom] = nilaiBaru;
+    }
+
+    //is
+    public boolean IsEmpty(){
+        return ((this.GetMaksNeffBaris()==0) && (this.GetMaksNeffKolom()==0));
     }
 
     //debug purpoos
@@ -49,52 +54,116 @@ public class MATRIKS
             System.out.println("|");
         }
     }
-    // public void BacaFileMatriks(){
-    //     int i=1;
-    //     Scanner input = new Scanner(System.in);
-    //     String namaFile = input.nextLine();
-    //     Path lokasiFile = Paths.get(namaFile);
-    //     if (Files.notExists(lokasiFile)){
-    //         System.out.println("Filenya gaada anjing");
-    //     }else{
-    //         File file = new File(namaFile);
-
-    //         try (BufferedReader br = new BufferedReader(new FileReader(file))){
-    //             String st;
-
-    //             while ((st = br.readLine()) != null){
-    //                 System.out.println(st);
-    //                 String[] nums = st.trim().split("\\s+");
-    //                 for (int j=1;j<=nums.length+1;j++){
-    //                     System.out.printf("%s,%d",nums[j-1],i);
-    //                     this.SetNilai(i,j,Float.parseFloat(nums[j-1]));
-    //                 }
-    //                 i++;
-    //                 this.SetMaksNeffKolom(nums.length);
-    //             }
-    //             this.SetMaksNeffBaris(i-1);
-    //         }
-    //         catch (IOException e){
-    //             System.out.println("Teuing anjing error IO");
-    //         }
-    //         // catch (FileNotFoundException e){
-    //         //     System.out.println("Teuing anjing error File");
-    //         // }
-    //     }
-    // }
-    public void BacaMatriks(){
+    public void BacaFileMatriks(){
+        int i=1;
         Scanner input = new Scanner(System.in);
-        int b = input.nextInt();
-        int k = input.nextInt();
-        this.SetMaksNeffBaris(b);
-        this.SetMaksNeffKolom(k);
-        for (int i=1;i<=GetMaksNeffBaris();i++){
-            for (int j=1;j<=GetMaksNeffKolom();j++){
-                this.SetNilai(i,j,input.nextFloat());
+        System.out.print("Nama File: ");
+        String namaFile = input.nextLine();
+        if (Files.notExists(Paths.get(namaFile))){
+            System.out.println("Filenya gaada anjing");
+        }else{
+            try {
+                Scanner scanner = new Scanner(new File(namaFile));
+                while (scanner.hasNextLine()) {
+                    String st = scanner.nextLine();
+                    // System.out.println(st);
+                    String[] nums = st.trim().split(" ");
+                    // System.out.println(nums.length);
+                    for (int j=0;j<nums.length;j++){
+                        // System.out.printf("%s|%d|%d\n",nums[j],i,j);
+                        // System.out.println(j);
+                        this.SetNilai(i,j+1,Double.parseDouble(nums[j]));
+                    }
+                    i++;
+                    this.SetMaksNeffKolom(nums.length);
+                }
+                this.SetMaksNeffBaris(i-1);
+                scanner.close();
+            } 
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
 
+    public void BacaMatriks(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Jumlah Baris: ");
+        int b = input.nextInt();
+        System.out.print("Jumlah Kolom: ");
+        int k = input.nextInt();
+        this.SetMaksNeffBaris(b);
+        this.SetMaksNeffKolom(k);
+        for (int i=1;i<=this.GetMaksNeffBaris();i++){
+            for (int j=1;j<=this.GetMaksNeffKolom();j++){
+                this.SetNilai(i,j,input.nextDouble());
+            }
+        }
+    }
+
+    //Caca
+    //Begin
+    // public double Determinan(){
+    //     double ratio,det;
+    //     // double temp[][] = new double [GetMaksNeffBaris()+1][GetMaksNeffKolom()+1];
+
+    //     /* ALGORITMA */
+    //     // if(GetMaksNeffKolom() == 1) return arr[1][1];
+    //     // if(GetMaksNeffKolom() == 2){
+    //     //     det = arr[1][1]*arr[2][2] - arr[1][2]*arr[2][1]
+    //     // }else{ //Mengisi matriks temp bertipe real
+    //     //     for (int i=1; i<=GetMaksNeffBaris(); i++)
+    //     //     {
+    //     //         for (int j=1; j<=GetMaksNeffKolom(); j++)
+    //     //         {
+    //     //             temp[i][j] = arr[i][j];
+    //     //         }
+    //     //     }
+
+    //         // Membentuk matriks segitiga atas
+    //         for (int i = 1; i <= this.GetMaksNeffBaris(); i++)
+    //         {
+    //             for (int j = 1; j <= this.GetMaksNeffKolom(); j++)
+    //             {
+    //                 if (j > i)
+    //                 {
+    //                     // ratio = temp[j][i] / temp[i][i];
+    //                     ratio = this.GetNilai(j, i) / this.GetNilai(i, i);
+    //                     for (int k = 1; k <= this.GetMaksNeffBaris(); k++)
+    //                     {
+    //                         // temp[j][k] -= ratio * temp[i][k];
+    //                         this.GetNilai(j, k) -= ratio * this.GetNilai(i, k);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         // Determinan didapatkan dari perkalian diagonalnya
+    //         det = 1;
+    //         // for (int i = 1; i <= this.GetMaksNeffBaris(); i++) det *= temp[i][i];
+    //         for (int i = 1; i <= this.GetMaksNeffBaris(); i++) det *= this.GetNilai(i,i);
+
+    //         if (det == 0) return 0;
+    //         else return det;
+    //     }
+
+    // public double[] cramers(double arr[][],double sol[])
+    // {
+    //     double cari[][] = new double[N][N];
+    //     double ans[] = new double[N];
+    //     for(int i=1; i<=N; i++){
+    //         for(int j=1; j<=N; j++){
+    //             for(int k=1; k<=N; k++){
+    //                 if(k == i) cari[j][k] = sol[j];
+    //                 else cari[j][k] = arr[j][k];      
+    //             }
+    //         }
+    //         ans[i]=Determinan(cari)/Determinan(A);
+    //     }
+    //     for(int i=1; i<=N; i++) System.out.println(ans[i]);
+    //     return x;
+    // }
+    //End
+    //Caca
 
     //Jundu
     //Begin
@@ -119,7 +188,7 @@ public class MATRIKS
                 }
         }
         /* METODE ELIMINASI GAUSS */
-        float pengali;
+        double pengali;
         for(int k=1;k<=this.GetMaksNeffKolom()-1;k++){
             /* OPERASI BARIS ELEMENTER */
             for (int i=this.GetMaksNeffBaris();i>k;i--){
@@ -171,7 +240,7 @@ public class MATRIKS
 
     public void TulisHasilGauss() {
         /*PREKONDISI : AUGMENTED MATRIKS DALAM BENTUK ECHELON FORM*/
-        float hasil[][] = new float[this.GetMaksNeffKolom()+1][this.GetMaksNeffKolom()+1];
+        double hasil[][] = new double[this.GetMaksNeffKolom()+1][this.GetMaksNeffKolom()+1];
         int indeksX = this.GetMaksNeffKolom()-1;
         
         for (int i = this.GetMaksNeffBaris(); i >=1 ; i--) {
