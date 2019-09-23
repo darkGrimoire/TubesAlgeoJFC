@@ -41,7 +41,7 @@ class Driver
                 if (choice1==1){
                     System.out.println("\n[1] Baca Matriks dari Input");
                     System.out.println("[2] Baca Matriks dari File");
-                    System.out.println(">> Menu Pilihan: ");
+                    System.out.print  (">> Menu Pilihan: ");
                     int choice2 = input.nextInt();
                     if (choice2==1){
                         M1.BacaMatriks();
@@ -80,7 +80,7 @@ class Driver
                 if (choice1==1){
                     System.out.println("\n[1] Baca Matriks dari Input");
                     System.out.println("[2] Baca Matriks dari File");
-                    System.out.println(">> Menu Pilihan: ");
+                    System.out.print  (">> Menu Pilihan: ");
                     int choice2 = input.nextInt();
                     if (choice2==1){
                         M2.BacaMatriks();
@@ -119,7 +119,7 @@ class Driver
                 if (choice1==1){
                     System.out.println("\n[1] Baca Matriks dari Input");
                     System.out.println("[2] Baca Matriks dari File");
-                    System.out.println(">> Menu Pilihan: ");
+                    System.out.print (">> Menu Pilihan: ");
                     int choice2 = input.nextInt();
                     if (choice2==1){
                         M3.BacaMatriks();
