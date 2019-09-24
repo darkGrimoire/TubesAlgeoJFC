@@ -57,6 +57,12 @@ class Driver
                     switch(choice1){
                         case 2:
                             M1.TulisMatriks();
+                            System.out.print("Simpan sebagai file? [Y]/n: ");
+                            char in = input.next().charAt(0);
+                            boolean save = ((in!='n') && (in!='N'));
+                            if (save){
+                                M1.TulisFileMatriks();
+                            }
                             break;
                         case 3:
                             break;
@@ -96,6 +102,12 @@ class Driver
                     switch(choice1){
                         case 2:
                             M2.TulisMatriks();
+                            System.out.print("Simpan sebagai file? [Y]/n: ");
+                            char in = input.next().charAt(0);
+                            boolean save = ((in!='n') && (in!='N'));
+                            if (save){
+                                M2.TulisFileMatriks();
+                            }
                             break;
                         case 3:
                             break;
@@ -135,6 +147,12 @@ class Driver
                     switch(choice1){
                         case 2:
                             M3.TulisMatriks();
+                            System.out.print("Simpan sebagai file? [Y]/n: ");
+                            char in = input.next().charAt(0);
+                            boolean save = ((in!='n') && (in!='N'));
+                            if (save){
+                                M3.TulisFileMatriks();
+                            }
                             break;
                         case 3:
                             break;
@@ -154,6 +172,8 @@ class Driver
                     }
                 }
             }
+            System.out.print("\n*Tekan tombol ENTER untuk lanjut*");
+            try{System.in.read();} catch (Exception e){}
         }
         // M.BacaFileMatriks();
         // M.TulisMatriks();

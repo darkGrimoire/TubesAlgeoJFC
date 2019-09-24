@@ -49,9 +49,30 @@ public class MATRIKS
         for (int i=1;i<=this.GetMaksNeffBaris();i++){
             System.out.printf("Arr[%3d]: |",i);
             for (int j=1;j<=this.GetMaksNeffKolom();j++){
-                System.out.printf("  %8.2f",this.GetNilai(i,j));
+                System.out.printf("  %9.6f",this.GetNilai(i,j));
             }
             System.out.println("|");
+        }
+    }
+    public void TulisFileMatriks(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Nama File: ");
+        String namaFile = input.nextLine();
+        try {
+            FileWriter fileWriter = new FileWriter(namaFile);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            for (int i=1;i<=this.GetMaksNeffBaris();i++){
+                // System.out.printf("Arr[%3d]: |",i);
+                for (int j=1;j<this.GetMaksNeffKolom();j++){
+                    printWriter.printf("%.6f ",this.GetNilai(i,j));
+                }
+                // System.out.println("|");
+                printWriter.printf("%.6f\n",this.GetNilai(i,this.GetMaksNeffKolom()));
+            }
+            printWriter.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
         }
     }
     public void BacaFileMatriks(){
