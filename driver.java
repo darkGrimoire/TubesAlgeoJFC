@@ -56,6 +56,7 @@ class Driver
                     System.out.println("Matriks M1 belum terisi! Mohon lakukan Baca Matriks terlebih dahulu.");
                 }else{
                     switch(choice1){
+                        // TULIS MATRIKS
                         case 2:
                             M1.TulisMatriks();
                             System.out.print("Simpan sebagai file? [Y]/n: ");
@@ -65,6 +66,7 @@ class Driver
                                 M1.TulisFileMatriks();
                             }
                             break;
+                        // SPL
                         case 3:
                             if (M1.IsAugmented()){
                                 System.out.println("\n[1] Metode eliminasi Gauss");
@@ -100,6 +102,7 @@ class Driver
                                 System.out.println("MATRIKS M1 bukan SPL!");
                             }
                             break;
+                        // DETERMINAN
                         case 4:
                             System.out.println("\n[1] Metode ekspansi kofaktor");
                             System.out.println("[2] Metode triangular");
@@ -108,6 +111,7 @@ class Driver
                             if (choice2==1) System.out.printf("Hasil determinan: %.6f", M1.DeterminanKofaktor());
                             if (choice2==2) System.out.printf("Hasil determinan: %.6f", M1.DeterminanTriangular());
                             break;
+                        // INVERSE
                         case 5:
                             System.out.println("\n[1] Metode Gauss-Jordan");
                             System.out.println("[2] Metode Adjoin");
@@ -117,11 +121,24 @@ class Driver
                                 M1.InverseGaussJordan();
                                 M1.TulisMatriks();
                             }
+                            else if (choice2==2){
+                                double det = M1.DeterminanKofaktor();
+                                M1.adjoin();
+                                M1.KaliKons(1/det);
+                                M1.TulisMatriks();
+                            }
                             break;
+                        // KOFAKTOR
                         case 6:
+                            M1.kofaktor();
+                            M1.TulisMatriks();
                             break;
+                        // ADJOINT
                         case 7:
+                            M1.adjoin();
+                            M1.TulisMatriks();
                             break;
+                        // INTERPOLASI
                         case 8:
                             Interpolasi(M1);
                             break;
@@ -149,6 +166,7 @@ class Driver
                     System.out.println("Matriks M2 belum terisi! Mohon lakukan Baca Matriks terlebih dahulu.");
                 }else{
                     switch(choice1){
+                        // TULIS MATRIKS
                         case 2:
                             M2.TulisMatriks();
                             System.out.print("Simpan sebagai file? [Y]/n: ");
@@ -158,6 +176,7 @@ class Driver
                                 M2.TulisFileMatriks();
                             }
                             break;
+                        // SPL
                         case 3:
                             if (M2.IsAugmented()){
                                 System.out.println("\n[1] Metode eliminasi Gauss");
@@ -194,6 +213,7 @@ class Driver
                                 System.out.println("MATRIKS M2 bukan SPL!");
                             }
                             break;
+                        // DETERMINAN
                         case 4:
                             System.out.println("\n[1] Metode ekspansi kofaktor");
                             System.out.println("[2] Metode triangular");
@@ -202,6 +222,7 @@ class Driver
                             if (choice2==1) System.out.printf("Hasil determinan: %.6f", M2.DeterminanKofaktor());
                             if (choice2==2) System.out.printf("Hasil determinan: %.6f", M2.DeterminanTriangular());
                             break;
+                        // INVERSE
                         case 5:
                             System.out.println("\n[1] Metode Gauss-Jordan");
                             System.out.println("[2] Metode Adjoin");
@@ -211,11 +232,24 @@ class Driver
                                 M2.InverseGaussJordan();
                                 M2.TulisMatriks();
                             }
+                            else if (choice2==2){
+                                double det = M2.DeterminanKofaktor();
+                                M2.adjoin();
+                                M2.KaliKons(1/det);
+                                M2.TulisMatriks();
+                            }
                             break;
+                        // KOFAKTOR
                         case 6:
+                            M2.kofaktor();
+                            M2.TulisMatriks();
                             break;
+                        // ADJOINT
                         case 7:
+                            M2.adjoin();
+                            M2.TulisMatriks();
                             break;
+                        // INTERPOLASI
                         case 8:
                             Interpolasi(M2);
                             break;
@@ -243,6 +277,7 @@ class Driver
                     System.out.println("Matriks M3 belum terisi! Mohon lakukan Baca Matriks terlebih dahulu.");
                 }else{
                     switch(choice1){
+                        // TULIS MATRIKS
                         case 2:
                             M3.TulisMatriks();
                             System.out.print("Simpan sebagai file? [Y]/n: ");
@@ -252,6 +287,7 @@ class Driver
                                 M3.TulisFileMatriks();
                             }
                             break;
+                        // SPL
                         case 3:
                             if (M3.IsAugmented()){
                                 System.out.println("\n[1] Metode eliminasi Gauss");
@@ -288,6 +324,7 @@ class Driver
                                 System.out.println("MATRIKS M3 bukan SPL!");
                             }
                             break;
+                        // DETERMINAN
                         case 4:
                             System.out.println("\n[1] Metode ekspansi kofaktor");
                             System.out.println("[2] Metode triangular");
@@ -296,6 +333,7 @@ class Driver
                             if (choice2==1) System.out.printf("Hasil determinan: %.6f", M3.DeterminanKofaktor());
                             if (choice2==2) System.out.printf("Hasil determinan: %.6f", M3.DeterminanTriangular());
                             break;
+                        // INVERSE
                         case 5:
                             System.out.println("\n[1] Metode Gauss-Jordan");
                             System.out.println("[2] Metode Adjoin");
@@ -305,11 +343,24 @@ class Driver
                                 M3.InverseGaussJordan();
                                 M3.TulisMatriks();
                             }
+                            else if (choice2==2){
+                                double det = M3.DeterminanKofaktor();
+                                M3.adjoin();
+                                M3.KaliKons(1/det);
+                                M3.TulisMatriks();
+                            }
                             break;
+                        // KOFAKTOR
                         case 6:
+                            M3.kofaktor();
+                            M3.TulisMatriks();
                             break;
+                        // ADJOINT
                         case 7:
+                            M3.adjoin();
+                            M3.TulisMatriks();
                             break;
+                        // INTERPOLASI
                         case 8:
                             Interpolasi(M3);
                             break;
@@ -367,10 +418,8 @@ class Driver
     //Jundu
     //begin
     public static void Interpolasi(MATRIKS M){
-        MATRIKS SPL = new MATRIKS(101,101);
-        SPL.SetMaksNeffBaris(M.GetMaksNeffBaris());
-        SPL.SetMaksNeffKolom(M.GetMaksNeffBaris()+1);
-        float temp;
+        MATRIKS SPL = new MATRIKS(M.GetMaksNeffBaris(),M.GetMaksNeffBaris()+1);
+        double temp;
 
         for (int i = 1; i <= SPL.GetMaksNeffBaris(); i++) {
             temp=1;
