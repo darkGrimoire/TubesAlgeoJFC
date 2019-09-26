@@ -388,7 +388,7 @@ public class MATRIKS
             /* OPERASI BARIS ELEMENTER */
             for (int i=this.GetMaksNeffBaris();i>k;i--){
                 
-                if(this.GetNilai(i-1, k)==0)    {pengali = 0;}
+                if(this.GetNilai(i-1, k)==0 || this.GetNilai(i-1, k)==-0)    {pengali = 0;}
                 else    {pengali = this.GetNilai(i, k)/this.GetNilai(i-1, k);}
                 
                 for (int j=k;j<=this.GetMaksNeffKolom();j++){
