@@ -280,7 +280,7 @@ public class MATRIKS
 
 
     public double DeterminanTriangular(){
-        double ratio,det;
+        double ratio,det=1;
         double temp[][] = new double [this.GetMaksNeffBaris()+1][this.GetMaksNeffKolom()+1];
 
         /* ALGORITMA */
@@ -296,26 +296,40 @@ public class MATRIKS
                 }
             }
 
+
             // Membentuk matriks segitiga atas
-            for (int i = 1; i <= this.GetMaksNeffBaris(); i++)
-            {
-                for (int j = 1; j <= this.GetMaksNeffKolom(); j++)
-                {
-                    if (j > i)
-                    {
-                        ratio = temp[j][i] / temp[i][i];
-                        for (int k = 1; k <= this.GetMaksNeffBaris(); k++)
-                        {
-                            temp[j][k] -= ratio * temp[i][k];
-                        }
+            for(int i=1; i< this.GetMaksNeffBaris(); i++){
+                int idx0=i;
+                while(temp[idx0][i]==0 && idx0<this.GetMaksNeffBaris()) idx0++;
+                if(idx0==this.GetMaksNeffBaris()+1) continue;
+                if(idx0>this.GetMaksNeffBaris()){
+                    return 0;
+                }
+                if(idx0!=i){
+                    double [] bntr = temp[idx0];
+                    temp[idx0] = temp[i];
+                    temp [i] = bntr;
+                    det *= -1.000000000;
+                    
+                }
+            }
+
+
+            for(int i=1; i< this.GetMaksNeffBaris(); i++){
+                for(int j=i+1; j<=this.GetMaksNeffKolom(); j++){
+                    if(temp[i][i]!=0){
+                    ratio= temp[j][i] / temp [i][i];
+                    for(int k=1; k<=this.GetMaksNeffKolom(); k++){
+                        temp[j][k]-=ratio*temp[i][k];
+                    }
                     }
                 }
             }
+            
             // Determinan didapatkan dari perkalian diagonalnya
-            det = 1;
             for (int i = 1; i <= this.GetMaksNeffBaris(); i++){
                 det *= temp[i][i];
-                // System.out.printf("%.4f",temp[i][i]);
+                //System.out.printf("%.4f ",temp[i][i]);
             }
 
             if (det == 0) return 0;
