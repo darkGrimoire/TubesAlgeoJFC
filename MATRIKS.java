@@ -304,15 +304,6 @@ public class MATRIKS
                 }
             }
 
-            // for (int i=1; i<=this.GetMaksNeffBaris(); i++)
-            // {
-            //     for (int j=1; j<=this.GetMaksNeffKolom(); j++)
-            //     {
-            //         System.out.printf("%.4f ",temp[i][j]);
-            //     }
-            //     System.out.printf("\n");
-            // }
-
             // Membentuk matriks segitiga atas
             for(int i=1; i< this.GetMaksNeffBaris(); i++){
                 int idx0=i;
@@ -327,22 +318,9 @@ public class MATRIKS
                     temp [i] = bntr;
                     det *= -1.000000000;
                     
-                    // for(int k=1; k<=this.GetMaksNeffBaris();k++){
-                    //     double bntr = temp[idx0][k];
-                    //     temp[idx0][k] = temp[i][k];
-                    //     temp[i][k] = bntr;
-                    // }
                 }
             }
 
-            // for (int i=1; i<=this.GetMaksNeffBaris(); i++)
-            // {
-            //     for (int j=1; j<=this.GetMaksNeffKolom(); j++)
-            //     {
-            //         System.out.printf("%.4f ",temp[i][j]);
-            //     }
-            //     System.out.printf("\n");
-            // }
 
             for(int i=1; i< this.GetMaksNeffBaris(); i++){
                 for(int j=i+1; j<=this.GetMaksNeffKolom(); j++){
@@ -354,15 +332,6 @@ public class MATRIKS
                     }
                 }
             }
-
-            // for (int i=1; i<=this.GetMaksNeffBaris(); i++)
-            // {
-            //     for (int j=1; j<=this.GetMaksNeffKolom(); j++)
-            //     {
-            //         System.out.printf("%.4f ",temp[i][j]);
-            //     }
-            //     System.out.printf("\n");
-            // }
             
             // Determinan didapatkan dari perkalian diagonalnya
             for (int i = 1; i <= this.GetMaksNeffBaris(); i++){
