@@ -418,8 +418,14 @@ class Driver
     //Jundu
     //begin
     public static void Interpolasi(MATRIKS M){
-        MATRIKS SPL = new MATRIKS(M.GetMaksNeffBaris(),M.GetMaksNeffBaris()+1);
-        double temp;
+        MATRIKS SPL = new MATRIKS(101,101);
+        SPL.SetMaksNeffBaris(M.GetMaksNeffBaris());
+        SPL.SetMaksNeffKolom(M.GetMaksNeffBaris()+1);
+        double temp,hasilTaksiran,taksiran;   
+        Scanner sc = new   Scanner(System.in);
+        System.out.print  ("Nilai x yang ingin di taksir : ");
+        taksiran = sc.nextDouble();     
+        hasilTaksiran = 0;
 
         for (int i = 1; i <= SPL.GetMaksNeffBaris(); i++) {
             temp=1;
@@ -430,11 +436,11 @@ class Driver
             SPL.SetNilai(i, SPL.GetMaksNeffKolom(), M.GetNilai(i, 2));
         }
 
-        SPL.MetodeEliminasiGauss();
-        SPL.MetodeEliminasiJordan();
-
+        
         System.out.printf("y = ");
         System.out.printf("%.1f ",SPL.GetNilai(1, SPL.GetMaksNeffKolom()));
+        hasilTaksiran = SPL.GetNilai(1, SPL.GetMaksNeffKolom());
+        temp = 1;
         for (int i = 2; i <= SPL.GetMaksNeffBaris(); i++) {
             if(0!=SPL.GetNilai(i, SPL.GetMaksNeffKolom())){
                 if(SPL.GetNilai(i, SPL.GetMaksNeffKolom())>=0){
@@ -442,8 +448,11 @@ class Driver
                 }
                 System.out.printf("%.1fx^%d ",SPL.GetNilai(i, SPL.GetMaksNeffKolom()),i-1);
             }
+            temp*=taksiran;
+            hasilTaksiran+=temp*SPL.GetNilai(i, SPL.GetMaksNeffKolom());
         }
         System.out.printf("\n");
+        System.out.printf("Nilai hasil taksiran : %f",hasilTaksiran);
     }
     //end
     //Jundu
