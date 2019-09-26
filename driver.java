@@ -13,6 +13,7 @@ class Driver
         MATRIKS M2 = new MATRIKS(100,100);
         MATRIKS M3 = new MATRIKS(100,100);
         String msg1, msg2, msg3;
+        int choice1, choice2;
         /* MAIN MENU*/
         while (true){
             msg1 = M1.IsEmpty() ? "Kosong" : "Terisi";
@@ -28,11 +29,11 @@ class Driver
             System.out.println("[4] Determinan                    |     13518125 Faris R. E.      |");
             System.out.println("[5] Matriks Balikan               +_______________________________+");
             System.out.println("[6] Matriks Kofaktor                                               ");
-            System.out.printf ("[7] Adjoin                        Status Matriks: M1: %s\n",msg1);
-            System.out.printf ("[8] Interpolasi Polinom                           M2: %s\n",msg2);
-            System.out.printf ("[9] Keluar                                        M3: %s\n",msg3);
+            System.out.printf ("[7] Adjoin                        Status Matriks: M1: %s (%dx%d)\n",msg1,M1.GetMaksNeffBaris(),M1.GetMaksNeffKolom());
+            System.out.printf ("[8] Interpolasi Polinom                           M2: %s (%dx%d)\n",msg2,M2.GetMaksNeffBaris(),M2.GetMaksNeffKolom());
+            System.out.printf ("[9] Keluar                                        M3: %s (%dx%d)\n",msg3,M3.GetMaksNeffBaris(),M3.GetMaksNeffKolom());
             System.out.print  (">> Menu Pilihan dan Matriks: ");
-            int choice1 = input.nextInt();
+            choice1 = input.nextInt();
             if (choice1==9){
                 System.exit(0);
             }
@@ -42,7 +43,7 @@ class Driver
                     System.out.println("\n[1] Baca Matriks dari Input");
                     System.out.println("[2] Baca Matriks dari File");
                     System.out.print  (">> Menu Pilihan: ");
-                    int choice2 = input.nextInt();
+                    choice2 = input.nextInt();
                     if (choice2==1){
                         M1.BacaMatriks();
                     }else if (choice2==2){
@@ -65,16 +66,59 @@ class Driver
                             }
                             break;
                         case 3:
+                            System.out.println("\n[1] Metode eliminasi Gauss");
+                            System.out.println("[2] Metode eliminasi Gauss-Jordan");
+                            System.out.println("[3] Metode matriks balikan");
+                            System.out.println("[4] Kaidah Cramer");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1){
+                                M1.MetodeEliminasiGauss();
+                                M1.TulisHasilGauss();
+                            }
+                            else if (choice2==2){
+                                M1.MetodeEliminasiGauss();
+                                M1.MetodeEliminasiJordan();
+                                M1.TulisHasilJordan();   
+                            }
+                            else if (choice2==3){
+                                MATRIKS MSol = new MATRIKS(M1.GetMaksNeffBaris(),1);
+                                for (int i=1;i<=M1.GetMaksNeffBaris();i++) MSol.SetNilai(i,1,M1.GetNilai(i,M1.GetMaksNeffKolom()));
+                                M1.InverseGaussJordan();
+                                M1 = M1.KaliMatriks(M1,MSol);
+                                M1.TulisMatriks();
+                            }
+                            else if (choice2==4){
+                                double ans[] = new double[M1.GetMaksNeffKolom()];
+                                ans = M1.cramers();
+                                for(int i=1; i<=M1.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
+
+                            }
                             break;
                         case 4:
+                            System.out.println("\n[1] Metode ekspansi kofaktor");
+                            System.out.println("[2] Metode triangular");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1) System.out.printf("Hasil determinan: %.6f", M1.DeterminanKofaktor());
+                            if (choice2==2) System.out.printf("Hasil determinan: %.6f", M1.DeterminanTriangular());
                             break;
                         case 5:
+                            System.out.println("\n[1] Metode Gauss-Jordan");
+                            System.out.println("[2] Metode Adjoin");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1){
+                                M1.InverseGaussJordan();
+                                M1.TulisMatriks();
+                            }
                             break;
                         case 6:
                             break;
                         case 7:
                             break;
                         case 8:
+                            Interpolasi(M1);
                             break;
                         default:
                             System.out.println("ERROR! Kembali ke menu awal.");
@@ -87,7 +131,7 @@ class Driver
                     System.out.println("\n[1] Baca Matriks dari Input");
                     System.out.println("[2] Baca Matriks dari File");
                     System.out.print  (">> Menu Pilihan: ");
-                    int choice2 = input.nextInt();
+                    choice2 = input.nextInt();
                     if (choice2==1){
                         M2.BacaMatriks();
                     }else if (choice2==2){
@@ -110,16 +154,55 @@ class Driver
                             }
                             break;
                         case 3:
+                            System.out.println("\n[1] Metode eliminasi Gauss");
+                            System.out.println("[2] Metode eliminasi Gauss-Jordan");
+                            System.out.println("[3] Metode matriks balikan");
+                            System.out.println("[4] Kaidah Cramer");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1){
+                                M2.MetodeEliminasiGauss();
+                                M2.TulisHasilGauss();
+                            }
+                            else if (choice2==2){
+                                M2.MetodeEliminasiGauss();
+                                M2.MetodeEliminasiJordan();
+                                M2.TulisHasilJordan();   
+                            }
+                            else if (choice2==3){
+
+                            }
+                            else if (choice2==4){
+                                double ans[] = new double[M2.GetMaksNeffKolom()];
+                                ans = M2.cramers();
+                                for(int i=1; i<=M2.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
+
+                            }
                             break;
                         case 4:
+                            System.out.println("\n[1] Metode ekspansi kofaktor");
+                            System.out.println("[2] Metode triangular");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1) System.out.printf("Hasil determinan: %.6f", M2.DeterminanKofaktor());
+                            if (choice2==2) System.out.printf("Hasil determinan: %.6f", M2.DeterminanTriangular());
                             break;
                         case 5:
+                            System.out.println("\n[1] Metode Gauss-Jordan");
+                            System.out.println("[2] Metode Adjoin");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1){
+                                M2.InverseGaussJordan();
+                                M2.TulisMatriks();
+                            }
                             break;
                         case 6:
                             break;
                         case 7:
                             break;
                         case 8:
+                            Interpolasi(M2);
                             break;
                         default:
                             System.out.println("ERROR! Kembali ke menu awal.");
@@ -132,7 +215,7 @@ class Driver
                     System.out.println("\n[1] Baca Matriks dari Input");
                     System.out.println("[2] Baca Matriks dari File");
                     System.out.print (">> Menu Pilihan: ");
-                    int choice2 = input.nextInt();
+                    choice2 = input.nextInt();
                     if (choice2==1){
                         M3.BacaMatriks();
                     }else if (choice2==2){
@@ -155,16 +238,55 @@ class Driver
                             }
                             break;
                         case 3:
+                            System.out.println("\n[1] Metode eliminasi Gauss");
+                            System.out.println("[2] Metode eliminasi Gauss-Jordan");
+                            System.out.println("[3] Metode matriks balikan");
+                            System.out.println("[4] Kaidah Cramer");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1){
+                                M3.MetodeEliminasiGauss();
+                                M3.TulisHasilGauss();
+                            }
+                            else if (choice2==2){
+                                M3.MetodeEliminasiGauss();
+                                M3.MetodeEliminasiJordan();
+                                M3.TulisHasilJordan();   
+                            }
+                            else if (choice2==3){
+
+                            }
+                            else if (choice2==4){
+                                double ans[] = new double[M3.GetMaksNeffKolom()];
+                                ans = M3.cramers();
+                                for(int i=1; i<=M3.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
+
+                            }
                             break;
                         case 4:
+                            System.out.println("\n[1] Metode ekspansi kofaktor");
+                            System.out.println("[2] Metode triangular");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1) System.out.printf("Hasil determinan: %.6f", M3.DeterminanKofaktor());
+                            if (choice2==2) System.out.printf("Hasil determinan: %.6f", M3.DeterminanTriangular());
                             break;
                         case 5:
+                            System.out.println("\n[1] Metode Gauss-Jordan");
+                            System.out.println("[2] Metode Adjoin");
+                            System.out.print  (">> Menu Pilihan: ");
+                            choice2 = input.nextInt();
+                            if (choice2==1){
+                                M3.InverseGaussJordan();
+                                M3.TulisMatriks();
+                            }
                             break;
                         case 6:
                             break;
                         case 7:
                             break;
                         case 8:
+                            Interpolasi(M3);
                             break;
                         default:
                             System.out.println("ERROR! Kembali ke menu awal.");
