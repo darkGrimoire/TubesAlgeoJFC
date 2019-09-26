@@ -1,0 +1,3 @@
+NaN NaN NaN NaN NaN NaN NaN
+0.0000000000 1.0000000000 NaN NaN NaN NaN NaN
+0.0000000000 0.0000000000 NaN -Infinity -Infinity Infinity Infinity

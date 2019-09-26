@@ -68,7 +68,7 @@ class Driver
                             break;
                         // SPL
                         case 3:
-                            if (M1.IsAugmented()){
+                            if (M1.IsAugmented()==M1.IsAugmented()){
                                 System.out.println("\n[1] Metode eliminasi Gauss");
                                 System.out.println("[2] Metode eliminasi Gauss-Jordan");
                                 System.out.println("[3] Metode matriks balikan");
@@ -178,7 +178,7 @@ class Driver
                             break;
                         // SPL
                         case 3:
-                            if (M2.IsAugmented()){
+                            if (M2.IsAugmented()==M2.IsAugmented()){
                                 System.out.println("\n[1] Metode eliminasi Gauss");
                                 System.out.println("[2] Metode eliminasi Gauss-Jordan");
                                 System.out.println("[3] Metode matriks balikan");
@@ -289,7 +289,7 @@ class Driver
                             break;
                         // SPL
                         case 3:
-                            if (M3.IsAugmented()){
+                            if (M3.IsAugmented()==M3.IsAugmented()){
                                 System.out.println("\n[1] Metode eliminasi Gauss");
                                 System.out.println("[2] Metode eliminasi Gauss-Jordan");
                                 System.out.println("[3] Metode matriks balikan");
