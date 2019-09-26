@@ -9,9 +9,9 @@ class Driver
     public static void main(String args[]) 
     { 
         Scanner input = new Scanner(System.in);
-        MATRIKS M1 = new MATRIKS(100,100);
-        MATRIKS M2 = new MATRIKS(100,100);
-        MATRIKS M3 = new MATRIKS(100,100);
+        MATRIKS M1 = new MATRIKS(0,0);
+        MATRIKS M2 = new MATRIKS(0,0);
+        MATRIKS M3 = new MATRIKS(0,0);
         String msg1, msg2, msg3;
         int choice1, choice2;
         /* MAIN MENU*/
@@ -66,33 +66,38 @@ class Driver
                             }
                             break;
                         case 3:
-                            System.out.println("\n[1] Metode eliminasi Gauss");
-                            System.out.println("[2] Metode eliminasi Gauss-Jordan");
-                            System.out.println("[3] Metode matriks balikan");
-                            System.out.println("[4] Kaidah Cramer");
-                            System.out.print  (">> Menu Pilihan: ");
-                            choice2 = input.nextInt();
-                            if (choice2==1){
-                                M1.MetodeEliminasiGauss();
-                                M1.TulisHasilGauss();
-                            }
-                            else if (choice2==2){
-                                M1.MetodeEliminasiGauss();
-                                M1.MetodeEliminasiJordan();
-                                M1.TulisHasilJordan();   
-                            }
-                            else if (choice2==3){
-                                MATRIKS MSol = new MATRIKS(M1.GetMaksNeffBaris(),1);
-                                for (int i=1;i<=M1.GetMaksNeffBaris();i++) MSol.SetNilai(i,1,M1.GetNilai(i,M1.GetMaksNeffKolom()));
-                                M1.InverseGaussJordan();
-                                M1 = M1.KaliMatriks(M1,MSol);
-                                M1.TulisMatriks();
-                            }
-                            else if (choice2==4){
-                                double ans[] = new double[M1.GetMaksNeffKolom()];
-                                ans = M1.cramers();
-                                for(int i=1; i<=M1.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
-
+                            if (M1.IsAugmented()){
+                                System.out.println("\n[1] Metode eliminasi Gauss");
+                                System.out.println("[2] Metode eliminasi Gauss-Jordan");
+                                System.out.println("[3] Metode matriks balikan");
+                                System.out.println("[4] Kaidah Cramer");
+                                System.out.print  (">> Menu Pilihan: ");
+                                choice2 = input.nextInt();
+                                if (choice2==1){
+                                    M1.MetodeEliminasiGauss();
+                                    M1.TulisHasilGauss();
+                                }
+                                else if (choice2==2){
+                                    M1.MetodeEliminasiGauss();
+                                    M1.MetodeEliminasiJordan();
+                                    M1.TulisHasilJordan();   
+                                }
+                                else if (choice2==3){
+                                    MATRIKS MSol = new MATRIKS(M1.GetMaksNeffBaris(),1);
+                                    for (int i=1;i<=M1.GetMaksNeffBaris();i++) MSol.SetNilai(i,1,M1.GetNilai(i,M1.GetMaksNeffKolom()));
+                                    // MSol.TulisMatriks();
+                                    M1.InverseGaussJordan();
+                                    // M1.TulisMatriks();
+                                    M1.KaliMatriks(MSol);
+                                    M1.TulisMatriks();
+                                }
+                                else if (choice2==4){
+                                    double ans[] = new double[M1.GetMaksNeffKolom()];
+                                    ans = M1.cramers();
+                                    for(int i=1; i<=M1.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
+                                }
+                            }else{
+                                System.out.println("MATRIKS M1 bukan SPL!");
                             }
                             break;
                         case 4:
@@ -154,29 +159,39 @@ class Driver
                             }
                             break;
                         case 3:
-                            System.out.println("\n[1] Metode eliminasi Gauss");
-                            System.out.println("[2] Metode eliminasi Gauss-Jordan");
-                            System.out.println("[3] Metode matriks balikan");
-                            System.out.println("[4] Kaidah Cramer");
-                            System.out.print  (">> Menu Pilihan: ");
-                            choice2 = input.nextInt();
-                            if (choice2==1){
-                                M2.MetodeEliminasiGauss();
-                                M2.TulisHasilGauss();
-                            }
-                            else if (choice2==2){
-                                M2.MetodeEliminasiGauss();
-                                M2.MetodeEliminasiJordan();
-                                M2.TulisHasilJordan();   
-                            }
-                            else if (choice2==3){
+                            if (M2.IsAugmented()){
+                                System.out.println("\n[1] Metode eliminasi Gauss");
+                                System.out.println("[2] Metode eliminasi Gauss-Jordan");
+                                System.out.println("[3] Metode matriks balikan");
+                                System.out.println("[4] Kaidah Cramer");
+                                System.out.print  (">> Menu Pilihan: ");
+                                choice2 = input.nextInt();
+                                if (choice2==1){
+                                    M2.MetodeEliminasiGauss();
+                                    M2.TulisHasilGauss();
+                                }
+                                else if (choice2==2){
+                                    M2.MetodeEliminasiGauss();
+                                    M2.MetodeEliminasiJordan();
+                                    M2.TulisHasilJordan();   
+                                }
+                                else if (choice2==3){
+                                    MATRIKS MSol = new MATRIKS(M2.GetMaksNeffBaris(),1);
+                                    for (int i=1;i<=M2.GetMaksNeffBaris();i++) MSol.SetNilai(i,1,M2.GetNilai(i,M2.GetMaksNeffKolom()));
+                                    // MSol.TulisMatriks();
+                                    M2.InverseGaussJordan();
+                                    // M1.TulisMatriks();
+                                    M2.KaliMatriks(MSol);
+                                    M2.TulisMatriks();
+                                }
+                                else if (choice2==4){
+                                    double ans[] = new double[M2.GetMaksNeffKolom()];
+                                    ans = M2.cramers();
+                                    for(int i=1; i<=M2.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
 
-                            }
-                            else if (choice2==4){
-                                double ans[] = new double[M2.GetMaksNeffKolom()];
-                                ans = M2.cramers();
-                                for(int i=1; i<=M2.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
-
+                                }
+                            }else{
+                                System.out.println("MATRIKS M2 bukan SPL!");
                             }
                             break;
                         case 4:
@@ -238,29 +253,39 @@ class Driver
                             }
                             break;
                         case 3:
-                            System.out.println("\n[1] Metode eliminasi Gauss");
-                            System.out.println("[2] Metode eliminasi Gauss-Jordan");
-                            System.out.println("[3] Metode matriks balikan");
-                            System.out.println("[4] Kaidah Cramer");
-                            System.out.print  (">> Menu Pilihan: ");
-                            choice2 = input.nextInt();
-                            if (choice2==1){
-                                M3.MetodeEliminasiGauss();
-                                M3.TulisHasilGauss();
-                            }
-                            else if (choice2==2){
-                                M3.MetodeEliminasiGauss();
-                                M3.MetodeEliminasiJordan();
-                                M3.TulisHasilJordan();   
-                            }
-                            else if (choice2==3){
+                            if (M3.IsAugmented()){
+                                System.out.println("\n[1] Metode eliminasi Gauss");
+                                System.out.println("[2] Metode eliminasi Gauss-Jordan");
+                                System.out.println("[3] Metode matriks balikan");
+                                System.out.println("[4] Kaidah Cramer");
+                                System.out.print  (">> Menu Pilihan: ");
+                                choice2 = input.nextInt();
+                                if (choice2==1){
+                                    M3.MetodeEliminasiGauss();
+                                    M3.TulisHasilGauss();
+                                }
+                                else if (choice2==2){
+                                    M3.MetodeEliminasiGauss();
+                                    M3.MetodeEliminasiJordan();
+                                    M3.TulisHasilJordan();   
+                                }
+                                else if (choice2==3){
+                                    MATRIKS MSol = new MATRIKS(M3.GetMaksNeffBaris(),1);
+                                    for (int i=1;i<=M3.GetMaksNeffBaris();i++) MSol.SetNilai(i,1,M3.GetNilai(i,M3.GetMaksNeffKolom()));
+                                    // MSol.TulisMatriks();
+                                    M3.InverseGaussJordan();
+                                    // M1.TulisMatriks();
+                                    M3.KaliMatriks(MSol);
+                                    M3.TulisMatriks();
+                                }
+                                else if (choice2==4){
+                                    double ans[] = new double[M3.GetMaksNeffKolom()];
+                                    ans = M3.cramers();
+                                    for(int i=1; i<=M3.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
 
-                            }
-                            else if (choice2==4){
-                                double ans[] = new double[M3.GetMaksNeffKolom()];
-                                ans = M3.cramers();
-                                for(int i=1; i<=M3.GetMaksNeffKolom()-1; i++) System.out.println(ans[i]);
-
+                                }
+                            }else{
+                                System.out.println("MATRIKS M3 bukan SPL!");
                             }
                             break;
                         case 4:

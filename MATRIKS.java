@@ -9,13 +9,15 @@ public class MATRIKS
     double isi[][]; // 1 - 100
     int maksNeffKolom;
     int maksNeffBaris;
+    int MAX_BARIS=100;
+    int MAX_KOLOM=100;
 
     //konstruktor
 
     public MATRIKS(int maksBaris, int maksKolom){
-        this.maksNeffBaris = 0;
-        this.maksNeffKolom = 0;
-        this.isi = new double[maksBaris+1][maksKolom+1];
+        this.maksNeffBaris = maksBaris;
+        this.maksNeffKolom = maksKolom;
+        this.isi = new double[MAX_BARIS+1][MAX_KOLOM+1];
     }
 
     // getter
@@ -56,7 +58,7 @@ public class MATRIKS
         for (int i=1;i<=this.GetMaksNeffBaris();i++){
             System.out.printf("Arr[%3d]: |",i);
             for (int j=1;j<=this.GetMaksNeffKolom();j++){
-                System.out.printf("  %9.6f",this.GetNilai(i,j));
+                System.out.printf("  %10.6f",this.GetNilai(i,j));
             }
             System.out.println("|");
         }
@@ -129,23 +131,22 @@ public class MATRIKS
         }
     }
 
-    public MATRIKS KaliMatriks(MATRIKS A, MATRIKS B){
+    public void KaliMatriks(MATRIKS that){
         /* KAMUS */
         int i,j,k;
         double temp;
         /* ALGORITMA */
         temp = 0;
-        MATRIKS mHasil = new MATRIKS(A.GetMaksNeffBaris(),B.GetMaksNeffKolom());
-        for (i=1;i<=A.GetMaksNeffBaris();i++){
-            for (j=1;j<=B.GetMaksNeffKolom();j++){
-                for (k=1;k<=A.GetMaksNeffKolom();k++){
-                    temp += A.GetNilai(i,k) * B.GetNilai(k,j);
+        for (i=1;i<=this.GetMaksNeffBaris();i++){
+            for (j=1;j<=that.GetMaksNeffKolom();j++){
+                for (k=1;k<=this.GetMaksNeffKolom();k++){
+                    temp += this.GetNilai(i,k) * that.GetNilai(k,j);
                 }
-                mHasil.SetNilai(i,j,temp);
+                this.SetNilai(i,j,temp);
                 temp=0;
             }
         } 
-        return mHasil;
+        this.SetMaksNeffKolom(that.GetMaksNeffKolom());
     }
 
     public double DeterminanKofaktor(){
@@ -156,9 +157,7 @@ public class MATRIKS
         int x,subi,subj;
         double det;
         /* ALGORITMA */
-        MATRIKS subMatrix = new MATRIKS(this.GetMaksNeffBaris()-1,this.GetMaksNeffKolom()-1);
-        subMatrix.SetMaksNeffBaris(this.GetMaksNeffBaris()-1);
-        subMatrix.SetMaksNeffKolom(this.GetMaksNeffKolom()-1);
+        MATRIKS subMatrix = new MATRIKS(this.GetMaksNeffBaris()-1,this.GetMaksNeffKolom()-1);        
         det = 0;
         // System.out.printf("%d",this.GetMaksNeffKolom());
         if (this.GetMaksNeffKolom() == 1){
@@ -187,6 +186,55 @@ public class MATRIKS
 
     //Caca
     //Begin
+    // public MATRIKS delrowcol(int p, int q){
+    //     MATRIKS newm = new MATRIKS(this.GetMaksNeffBaris(),this.GetMaksNeffKolom());
+    //     int a=1,b=1;
+    //     for(int i=1; i<=this.GetMaksNeffBaris(); i++){
+    //         for(int j=1; j<=this.GetMaksNeffKolom(); j++){
+    //             if(a!=i && b!=j){
+    //                 newm.isi[a][b]=this.isi[i][j];
+    //                 b++;
+    //                 if(b>this.GetMaksNeffKolom()-1){
+    //                     b=1;
+    //                     a++;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return newm;
+    // }
+
+    // public double countkof(int p, int q){
+    //     if((p+q)%2 != 0 ){
+    //         return DeterminanKofaktor(delrowcol(p,q))*(-1);
+    //     }else return (this.delrowcol(p,q)).DeterminanKofaktor();
+    // }
+
+    // public void kofaktor(){
+    //     // MATRIKS kof = new MATRIKS(this.GetMaksNeffBaris()+1,this.GetMaksNeffKolom()+1);
+    //     for(int i=1; i<=this.GetMaksNeffBaris(); i++){
+    //         for(int j=1; j<=this.GetMaksNeffKolom(); j++){
+    //             this.GetNilai(i,j,this.countkof(i,j));
+    //         }
+    //     }
+    //     // return kof;
+    // }
+
+    // public void transpose(){
+    //     // MATRIKS trans = new MATRIKS(this.GetMaksNeffBaris()+1,this.GetMaksNeffKolom()+1);
+    //     for(int i=1; i<=this.GetMaksNeffBaris(); i++){
+    //         for(int j=1; j<=this.GetMaksNeffKolom(); j++){
+    //             trans.isi[i][j]=this.isi[j][i];
+    //         }
+    //     }
+    //     // return trans;
+    // }
+
+    // public void adjoin(){
+    //     this.kofaktor().transpose();
+    // }
+
+
     public double DeterminanTriangular(){
         double ratio,det;
         double temp[][] = new double [this.GetMaksNeffBaris()+1][this.GetMaksNeffKolom()+1];
@@ -223,7 +271,7 @@ public class MATRIKS
             det = 1;
             for (int i = 1; i <= this.GetMaksNeffBaris(); i++){
                 det *= temp[i][i];
-                System.out.printf("%.4f",temp[i][i]);
+                // System.out.printf("%.4f",temp[i][i]);
             }
 
             if (det == 0) return 0;
@@ -245,8 +293,8 @@ public class MATRIKS
                     else mCari.SetNilai(j,k,this.GetNilai(j,k));
                 }
             }
-            mCari.TulisMatriks();
-            ans[i]=mCari.DeterminanTriangular()/mKoef.DeterminanTriangular();
+            // mCari.TulisMatriks();
+            ans[i]=mCari.DeterminanKofaktor()/mKoef.DeterminanKofaktor();
         }
         // for(int i=1; i<=N; i++) System.out.println(ans[i]);
         return ans;
@@ -354,7 +402,7 @@ public class MATRIKS
             System.out.printf("%3c%d",'x',i);
             for (int j = 0; j <= this.GetMaksNeffKolom()-1; j++) {
                 if(hasil[0][j]==1)
-                    System.out.printf("  %5.0f",hasil[i][j]);
+                    System.out.printf("  %10.6f",hasil[i][j]);
             }
             System.out.println();
         }
@@ -376,22 +424,22 @@ public class MATRIKS
         for (int i = 1; i <= this.GetMaksNeffKolom()-1; i++) {
             System.out.printf("%3c%d",'x',i);
             if(isnVarBebas[i]){
-                System.out.printf("  %5.0f",this.GetNilai(i, this.GetMaksNeffKolom()));
+                System.out.printf("  %10.6f",this.GetNilai(i, this.GetMaksNeffKolom()));
                 for (int j = i; j <= this.GetMaksNeffKolom()-1; j++) {
                     if(this.GetNilai(i, j)==0)
                         this.SetNilai(i, j,-0f);
                     if(!isnVarBebas[j])
-                        System.out.printf("  %5.0f",-1*this.GetNilai(i, j));
+                        System.out.printf("  %10.6f",-1*this.GetNilai(i, j));
                 }
             }
             else{
-                System.out.printf("  %5.0f",0.0);
+                System.out.printf("  %10.6f",0.0);
                 for (int j = 1; j <= this.GetMaksNeffKolom()-1; j++) {
                     if(!isnVarBebas[j]){
                         if(i==j){
-                            System.out.printf("  %5.0f",1.0);
+                            System.out.printf("  %10.6f",1.0);
                         }else{
-                           System.out.printf("  %5.0f",0.0);
+                           System.out.printf("  %10.6f",0.0);
                         }
                     }
                 }
