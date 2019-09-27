@@ -404,11 +404,21 @@ public class MATRIKS
                     );
                 }
             }
-            /* SCALING */
-            for (int j=this.GetMaksNeffKolom();j>=k;j--){
-                this.SetNilai(k,j,
-                    this.GetNilai(k,j)/this.GetNilai(k,k)
-                );
+        }
+
+        /* SCALING */
+        for (int k = 1; k <= this.GetMaksNeffBaris(); k++) {
+            pengali = 0;
+            for (int j=1;j<=this.GetMaksNeffKolom();j++){
+                if((this.GetNilai(k, j)!=0 && this.GetNilai(k, j)!=-0) && pengali== 0){
+                    pengali = this.GetNilai(k,j);
+                }
+                if(pengali!=0)
+                {
+                    this.SetNilai(k,j,
+                        this.GetNilai(k,j)/pengali
+                    );
+                }
             }
         }
     }
@@ -419,23 +429,22 @@ public class MATRIKS
         F.S. Augmented Matriks Reduced Echelon form
         PREKONDISI : MATRIKS HARUS SUDAH ECHELON FORM
         */
-        /* METODE ELIMINASI JORDAN */
-        int baris = 1,barisSebelum=0;
-        for (int k = 1; k < this.GetMaksNeffKolom(); k++) {
-            while (this.GetNilai(baris, k)!=1 && baris<this.GetMaksNeffBaris()){
-                baris++; 
-            }
-            //System.out.println(baris);
-            if(baris!=barisSebelum && baris<=this.GetMaksNeffBaris()){
-                for (int i = 1; i < baris; i++) {
-                    for (int j = this.GetMaksNeffKolom(); j >= k; j--) {
+        // /* METODE ELIMINASI JORDAN */
+        for (int k = this.GetMaksNeffBaris(); k >= 1; k--) {
+            int counter = 0;
+            do{
+                counter++;
+            }while(this.GetNilai(k, counter)!=1);
+
+            for (int i = 1; i <= this.GetMaksNeffBaris(); i++) {
+                if(i!=k){
+                    double pengali = this.GetNilai(i, counter);
+                    for (int j = counter; j <= this.GetMaksNeffKolom(); j++) {
                         this.SetNilai(i,j,
-                            this.GetNilai(i, j)-(this.GetNilai(baris, j)*this.GetNilai(i, k))
+                            this.GetNilai(i, j)-(pengali*this.GetNilai(k, j))
                         );
                     }
                 }
-                barisSebelum = baris;
-                baris++;
             }
         }
     }
@@ -477,25 +486,31 @@ public class MATRIKS
     public void TulisHasilJordan() {
         /*PREKONDISI : AUGMENTED MATRIKS DALAM BENTUK REDUCED ECHELON FORM*/
         boolean isnVarBebas[] = new boolean[this.GetMaksNeffKolom()];
-        for (int i = 1; i <= this.GetMaksNeffKolom()-1; i++) {
-            isnVarBebas[i] = true;
-            for (int j = 1; j <= this.GetMaksNeffBaris(); j++) {
-                if(i!=j){
-                    isnVarBebas[i] = isnVarBebas[i] && (this.GetNilai(j, i)==0);
-                }
-            }
+        int counter = 0;
+        for (int j = 1; j <= this.GetMaksNeffKolom()-1; j++) {
+            isnVarBebas[j] = false;
+        }
+        for (int i = 1; i <= this.GetMaksNeffBaris(); i++) {
+            counter = 0;
+            do{
+                counter++;
+            }while(this.GetNilai(i, counter)!=1);
+            isnVarBebas[counter] = true;
         }
 
+
+        counter = 1;
         for (int i = 1; i <= this.GetMaksNeffKolom()-1; i++) {
             System.out.printf("%3c%d",'x',i);
             if(isnVarBebas[i]){
-                System.out.printf("  %10.6f",this.GetNilai(i, this.GetMaksNeffKolom()));
-                for (int j = i; j <= this.GetMaksNeffKolom()-1; j++) {
-                    if(this.GetNilai(i, j)==0)
-                        this.SetNilai(i, j,-0f);
+                System.out.printf("  %10.6f",this.GetNilai(counter, this.GetMaksNeffKolom()));
+                for (int j = 1; j <= this.GetMaksNeffKolom()-1; j++) {
+                    if(this.GetNilai(counter, j)==0)
+                        this.SetNilai(counter, j,-0);
                     if(!isnVarBebas[j])
-                        System.out.printf("  %10.6f",-1*this.GetNilai(i, j));
+                        System.out.printf("  %10.6f",-1*this.GetNilai(counter, j));
                 }
+                counter++;
             }
             else{
                 System.out.printf("  %10.6f",0.0);
